@@ -5,9 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ImageView;
  
 @SuppressLint("WrongCall")
 public class GameView extends SurfaceView {
@@ -15,14 +17,18 @@ public class GameView extends SurfaceView {
        private Bitmap tedBgAnim;
        private Bitmap tunnelBitmap;
        private Bitmap map;
+       private Bitmap map2;
        private SurfaceHolder holder;
        private GameLoopThread gameLoopThread;
        private TedSprite tedSprite;
        private TedSpriteBG bgSprite;
-       private TunnelSprite tunnelSprite;
        private int x = 0; 
        private int xSpeed = 1;
+       private int moveBGX = 0;
+       private int moveBGY = 0;
+       private ImageView imageView;
       
+       
        public GameView(Context context) {
              super(context);
              gameLoopThread = new GameLoopThread(this);
@@ -55,18 +61,30 @@ public class GameView extends SurfaceView {
              });
              tedAnim = BitmapFactory.decodeResource(getResources(), R.drawable.ted_extended);
              tedBgAnim = BitmapFactory.decodeResource(getResources(), R.drawable.ted_background_soil);
-             tunnelBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ted_tunnel_sprite);
+             tunnelBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ted_tunnel);
              map = BitmapFactory.decodeResource(getResources(), R.drawable.soil);
+             map2 = BitmapFactory.decodeResource(getResources(), R.drawable.soil);
+             bgSprite = new TedSpriteBG(this, tedBgAnim, tunnelBitmap, map);
              tedSprite = new TedSprite(this, tedAnim);
-             bgSprite = new TedSpriteBG(this, tedBgAnim);            
-             tunnelSprite = new TunnelSprite(this, tunnelBitmap);
+             Drawable drawable = new BitmapDrawable(getResources(), map);
+            // imageView.setBackground(drawable);
+           
+             
+             
        }
  
-       protected void onDraw(Canvas canvas) {
-    	   //canvas.drawColor(Color.BLACK);
-    	   canvas.drawBitmap(map, 0, 0, null);
-           tunnelSprite.onDraw(canvas);
+       @Override
+	protected void onDraw(Canvas canvas) {
+    	  // canvas.translate(0, TedSprite.getY() + 5);
+    	   moveBGY = moveBGY - 4;
+    	   if(moveBGY < -128){
+    		   moveBGY = 0;
+    	   }
+    	   canvas.drawBitmap(map, 0, moveBGY, null);
+    	   canvas.translate(0, -TedSpriteBG.getY() + 250);
     	   bgSprite.onDraw(canvas);
-           tedSprite.onDraw(canvas);
+    	   tedSprite.onDraw(canvas);
        }
+       
+
 }

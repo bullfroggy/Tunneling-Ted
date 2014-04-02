@@ -3,8 +3,10 @@ package edu.wit.monplaisirj;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 
 
@@ -12,35 +14,42 @@ public class TedSprite {
 	
     private static final int BMP_ROWS = 2;
     private static final int BMP_COLUMNS = 2;
-    private static int x = 250;
-    private static int y = 100;
+    private int x = 252;
+    private int y = 400;
     private int xSpeed = 5;
-    private int ySpeed = 5;
+    private int ySpeed = 4;
     private GameView gameView;
-    private Bitmap tedAnim;
+    private Bitmap tedBgAnim;
     private int currentFrame = 0;
     private int width;
     private int height;
+    private Paint paint;
 
     public TedSprite(GameView gameView, Bitmap bmp) {
           this.gameView = gameView;
-          this.tedAnim = bmp;
+          this.tedBgAnim = bmp;
           this.width = bmp.getWidth() / BMP_COLUMNS;
           this.height =  bmp.getHeight() / BMP_ROWS;
+          paint = new Paint();
+          paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+ 
     }
 
     private void update() {
+    	
+    	/*
           if (y >= gameView.getHeight() - height - ySpeed) {
                  ySpeed = -5;
           }
+          
+          */
           if (y + ySpeed < 0) {
-                 ySpeed = 5;
+                 ySpeed = 4;
           }
           y = y + ySpeed;
           currentFrame = ++currentFrame % BMP_COLUMNS;
     }
-    
-  
+
     @SuppressLint("DrawAllocation")
 	public void onDraw(Canvas canvas) {
           update();
@@ -48,13 +57,7 @@ public class TedSprite {
           int srcY = 1 * height;
           Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
           Rect dst = new Rect(x, y, x + width, y + height);
-          canvas.drawBitmap(tedAnim, src, dst, null);
-   
-    }
-    public static int getX(){
-    	return x;
-    }
-    public static int getY(){
-    	return y;
+          canvas.drawBitmap(tedBgAnim, src, dst, null);
+          
     }
 }
