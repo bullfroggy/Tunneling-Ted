@@ -65,8 +65,8 @@ public class GameView extends SurfaceView {
        protected void onDraw(Canvas canvas) {
     	   //canvas.drawColor(Color.BLACK);
     	   canvas.drawBitmap(map, 0, 0, null);
+           tunnelSprite.onDraw(canvas);
     	   bgSprite.onDraw(canvas);
            tedSprite.onDraw(canvas);
-           tunnelSprite.onDraw(canvas);
        }
 }

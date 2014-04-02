@@ -27,7 +27,6 @@ public class TedSprite {
           this.tedAnim = bmp;
           this.width = bmp.getWidth() / BMP_COLUMNS;
           this.height =  bmp.getHeight() / BMP_ROWS;
-          
     }
 
     private void update() {
