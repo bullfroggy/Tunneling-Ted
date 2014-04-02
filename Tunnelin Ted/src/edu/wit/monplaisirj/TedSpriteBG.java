@@ -4,6 +4,9 @@ package edu.wit.monplaisirj;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 
 
@@ -20,23 +23,26 @@ public class TedSpriteBG {
     private int currentFrame = 0;
     private int width;
     private int height;
+    private Paint paint;
 
     public TedSpriteBG(GameView gameView, Bitmap bmp) {
           this.gameView = gameView;
           this.tedBgAnim = bmp;
           this.width = bmp.getWidth() / BMP_COLUMNS;
           this.height =  bmp.getHeight() / BMP_ROWS;
-          System.out.println(bmp.getWidth());
-          System.out.println(bmp.getHeight());
-          System.out.println(width);
-          System.out.println(height);
-          
+          paint = new Paint();
+          paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+ 
     }
 
     private void update() {
+    	
+    	/*
           if (y >= gameView.getHeight() - height - ySpeed) {
                  ySpeed = -5;
           }
+          
+          */
           if (y + ySpeed < 0) {
                  ySpeed = 5;
           }
@@ -52,5 +58,6 @@ public class TedSpriteBG {
           Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
           Rect dst = new Rect(x, y, x + width, y + height);
           canvas.drawBitmap(tedBgAnim, src, dst, null);
+          
     }
 }

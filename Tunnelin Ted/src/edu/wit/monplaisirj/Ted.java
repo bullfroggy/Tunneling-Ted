@@ -12,7 +12,7 @@ public class Ted extends TedSprite {
 	
 	
 	public Ted(GameView gameView, Bitmap bmp) {
-		super(gameView, bmp);
+		super(gameView, bmp, bmp, bmp);
 		// TODO Auto-generated constructor stub
 	}
 
