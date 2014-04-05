@@ -16,6 +16,10 @@ public class GameView extends SurfaceView {
        private Bitmap tedAnim;
        private Bitmap tedBgAnim;
        private Bitmap tunnelBitmap;
+       private Bitmap boulder1;
+       private Bitmap boulder2;
+       private Bitmap boulder3;
+       private Bitmap boulder4;
        private Bitmap map;
        private Bitmap map2;
        private SurfaceHolder holder;
@@ -59,30 +63,32 @@ public class GameView extends SurfaceView {
                                   int width, int height) {
                     }
              });
+             boulder1 = BitmapFactory.decodeResource(getResources(), R.drawable.boulder1);
+             boulder2 = BitmapFactory.decodeResource(getResources(), R.drawable.boulder2);
+             boulder3 = BitmapFactory.decodeResource(getResources(), R.drawable.boulder3);
+             boulder4 = BitmapFactory.decodeResource(getResources(), R.drawable.boulder4);
              tedAnim = BitmapFactory.decodeResource(getResources(), R.drawable.ted_extended);
              tedBgAnim = BitmapFactory.decodeResource(getResources(), R.drawable.ted_background_soil);
              tunnelBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ted_tunnel);
              map = BitmapFactory.decodeResource(getResources(), R.drawable.soil);
              map2 = BitmapFactory.decodeResource(getResources(), R.drawable.soil);
-             bgSprite = new TedSpriteBG(this, tedBgAnim, tunnelBitmap, map);
+             bgSprite = new TedSpriteBG(this, tedBgAnim, tunnelBitmap, map, boulder1, boulder2, boulder3, boulder4);
              tedSprite = new TedSprite(this, tedAnim);
              Drawable drawable = new BitmapDrawable(getResources(), map);
             // imageView.setBackground(drawable);
-           
-             
              
        }
  
        @Override
 	protected void onDraw(Canvas canvas) {
     	  // canvas.translate(0, TedSprite.getY() + 5);
-    	   moveBGY = moveBGY - 4;
+    	   moveBGY = moveBGY - 10;
     	   if(moveBGY < -128){
     		   moveBGY = 0;
     	   }
     	   canvas.drawBitmap(map, 0, moveBGY, null);
     	   canvas.translate(0, -TedSpriteBG.getY() + 250);
-    	   bgSprite.onDraw(canvas);
+    	   bgSprite.onDraw(canvas);    	   
     	   tedSprite.onDraw(canvas);
        }
        

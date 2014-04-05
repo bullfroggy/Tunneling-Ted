@@ -8,16 +8,17 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.widget.ImageView;
 
 
 public class TedSprite {
 	
     private static final int BMP_ROWS = 2;
     private static final int BMP_COLUMNS = 2;
-    private int x = 252;
+    private int x = 277;
     private int y = 400;
     private int xSpeed = 5;
-    private int ySpeed = 4;
+    private int ySpeed = 10;
     private GameView gameView;
     private Bitmap tedBgAnim;
     private int currentFrame = 0;
@@ -32,7 +33,6 @@ public class TedSprite {
           this.height =  bmp.getHeight() / BMP_ROWS;
           paint = new Paint();
           paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
- 
     }
 
     private void update() {
@@ -44,10 +44,11 @@ public class TedSprite {
           
           */
           if (y + ySpeed < 0) {
-                 ySpeed = 4;
+                 ySpeed = 10;
           }
           y = y + ySpeed;
           currentFrame = ++currentFrame % BMP_COLUMNS;
+          
     }
 
     @SuppressLint("DrawAllocation")
@@ -58,6 +59,5 @@ public class TedSprite {
           Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
           Rect dst = new Rect(x, y, x + width, y + height);
           canvas.drawBitmap(tedBgAnim, src, dst, null);
-          
     }
 }
